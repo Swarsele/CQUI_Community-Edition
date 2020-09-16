@@ -10,6 +10,11 @@ include("InstanceManager");
 local m_tabs;
 local _KeyBindingActions = InstanceManager:new("KeyBindingAction", "Root", Controls.KeyBindingsStack);
 
+local suzerain_icon_options = {
+    {"LOC_CQUI_SUZ_CIV_ICON",    0},
+    {"LOC_CQUI_SUZ_LEADER_ICON", 1}
+};
+
 local resource_icon_style_options = {
     {"LOC_CQUI_GENERAL_SOLID"      , 0},
     {"LOC_CQUI_GENERAL_TRANSPARENT", 1},
@@ -498,6 +503,7 @@ function Initialize()
         {Controls.UnitsTab, Controls.UnitsOptions},
         {Controls.TraderScreenTab, Controls.TraderScreenOption},
         {Controls.RecommendationsTab, Controls.RecommendationsOptions},
+        {Controls.NotificationsTab, Controls.NotificationsOptions},
         {Controls.HiddenTab, Controls.HiddenOptions}
     };
 
@@ -531,6 +537,7 @@ function Initialize()
     PopulateComboBox(Controls.ImprovementsRecommendationsPullDown, boolean_options, "CQUI_ShowImprovementsRecommendations");
     PopulateComboBox(Controls.CityDetailAdvisorPullDown, boolean_options, "CQUI_ShowCityDetailAdvisor");
 
+
     --Populating/binding checkboxes...
     PopulateCheckBox(Controls.ProductionQueueCheckbox, "CQUI_ProductionQueue");
     RegisterControl(Controls.ProductionQueueCheckbox, "CQUI_ProductionQueue", UpdateCheckbox);
@@ -545,6 +552,8 @@ function Initialize()
     PopulateCheckBox(Controls.SmartbannerDistrictsAvailableCheckbox, "CQUI_Smartbanner_DistrictsAvailable", Locale.Lookup("LOC_CQUI_CITYVIEW_SMARTBANNER_DISTRICTS_AVAILABLE_TOOLTIP"));
     PopulateCheckBox(Controls.ToggleYieldsOnLoadCheckbox, "CQUI_ToggleYieldsOnLoad");
     PopulateCheckBox(Controls.ShowSuzerainInCityStateBanner, "CQUI_ShowSuzerainInCityStateBanner", Locale.Lookup("LOC_CQUI_SHOW_SUZERAIN_IN_CITYSTATE_BANNER_TOOLTIP"));
+    PopulateComboBox(Controls.CityBannerSuzerainStyle, suzerain_icon_options, "CQUI_LeaderIconOrCivIconInCityStateBanner");
+    PopulateCheckBox(Controls.ShowSuzerainLabelInCityStateBanner, "CQUI_ShowSuzerainLabelInCityStateBanner");
     PopulateCheckBox(Controls.ShowWarIconInCityStateBanner, "CQUI_ShowWarIconInCityStateBanner", Locale.Lookup("LOC_CQUI_SHOW_WAR_ICON_IN_CITYSTATE_BANNER_TOOLTIP"));
     PopulateCheckBox(Controls.RelocateCityStrikeCheckbox, "CQUI_RelocateCityStrike", Locale.Lookup("LOC_CQUI_CITYVIEW_RELOCATECITYSTRIKEBUTTON_TOOLTIP"));
     PopulateCheckBox(Controls.RelocateEncampmentStrikeCheckbox, "CQUI_RelocateEncampmentStrike", Locale.Lookup("LOC_CQUI_CITYVIEW_RELOCATEENCAMPMENTSTRIKEBUTTON_TOOLTIP"));
@@ -571,6 +580,12 @@ function Initialize()
     PopulateSlider(Controls.SmartWorkIconSizeSlider, Controls.SmartWorkIconSizeText, "CQUI_SmartWorkIconSize", WorkIconSizeConverter);
     PopulateSlider(Controls.WorkIconAlphaSlider, Controls.WorkIconAlphaText, "CQUI_WorkIconAlpha", WorkIconAlphaConverter);
     PopulateSlider(Controls.SmartWorkIconAlphaSlider, Controls.SmartWorkIconAlphaText, "CQUI_SmartWorkIconAlpha", WorkIconAlphaConverter);
+    
+    -- Notifications
+    PopulateCheckBox(Controls.NotificationGoodyHutCheckbox,   "CQUI_NotificationGoodyHut");
+    --PopulateCheckBox(Controls.NotificationTradeDealCheckbox,  "CQUI_NotificationTradeDeal");
+    --PopulateCheckBox(Controls.NotificationPopulationCheckbox, "CQUI_NotificationPopulation");
+    --PopulateCheckBox(Controls.NotificationCityBorderCheckbox, "CQUI_NotificationCityBorder");
 
     InitializeGossipCheckboxes();
     InitializeTraderScreenCheckboxes();
@@ -589,6 +604,7 @@ function Initialize()
     );
     LuaEvents.CQUI_SettingsUpdate.Add(ToggleSmartbannerCheckboxes);
     LuaEvents.CQUI_SettingsUpdate.Add(ToggleSmartWorkIconSettings);
+	LuaEvents.CQUI_SettingsUpdate.Add(ToggleSuzerainOptionsCheckboxes);
     LuaEvents.CQUI_SettingsUpdate.Add(UpdateKeyBindingsDisplay);
 
     LuaEvents.CQUI_SettingsInitialized(); --Tell other elements that the settings have been initialized and it's safe to try accessing settings now
@@ -598,6 +614,14 @@ end
 function ToggleSmartbannerCheckboxes()
     local selected = Controls.SmartbannerCheckbox:IsSelected();
     Controls.SmartbannerCheckboxes:SetHide(not selected);
+    Controls.CityViewStack:ReprocessAnchoring();
+end
+
+-- ===========================================================================
+
+function ToggleSuzerainOptionsCheckboxes()
+    local selected = Controls.ShowSuzerainInCityStateBanner:IsSelected();
+    Controls.CityStateSuzerainOptions:SetHide(not selected);
     Controls.CityViewStack:ReprocessAnchoring();
 end
 

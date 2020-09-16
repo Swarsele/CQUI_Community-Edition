@@ -24,6 +24,7 @@
                             <GridButton ID="LensesTab" Style="ShellTabSmall" String="{LOC_CQUI_LENSES:upper}" Size="200,32"/>
                             <GridButton ID="TraderScreenTab" Style="ShellTabSmall" String="{LOC_CQUI_TRADER_SCREEN:upper}" Size="200,32"/>
                             <GridButton ID="RecommendationsTab" Style="ShellTabSmall" String="{LOC_CQUI_RECOMMENDATIONS_SCREEN:upper}" Size="200,32"/>
+                            <GridButton ID="NotificationsTab" Style="ShellTabSmall" String="{LOC_OPTIONS_NOTIFICATIONS:upper}" Size="200,32"/>
                             <GridButton ID="HiddenTab" Style="ShellTabSmall" String="{LOC_CQUI_GENERAL_HIDDEN:upper}" Size="200,32" Hidden="1"/>
                         </Stack>
                     </Grid>
@@ -43,9 +44,6 @@
                             </Stack>
                             <Stack Anchor="R,T" StackGrowth="Left" Padding="5">
                                 <GridButton ID="ToggleYieldsOnLoadCheckbox" Anchor="L,C" Offset="0,0" Size="300,24" Style="CheckBoxControl" String="LOC_CQUI_GENERAL_TOGGLEYIELDSONLOAD" />
-                            </Stack>
-                            <Stack Anchor="R,T" StackGrowth="Left" Padding="5">
-                                <GridButton ID="ShowSuzerainInCityStateBanner" Anchor="L,C" Offset="0,0" Size="300,24" Style="CheckBoxControl" String="LOC_CQUI_SHOW_SUZERAIN_IN_CITYSTATE_BANNER" />
                             </Stack>
                             <Stack Anchor="R,T" StackGrowth="Left" Padding="5">
                                 <GridButton ID="ShowWarIconInCityStateBanner" Anchor="L,C" Offset="0,0" Size="300,24" Style="CheckBoxControl" String="LOC_CQUI_SHOW_WAR_ICON_IN_CITYSTATE_BANNER" />
@@ -118,8 +116,19 @@
                                     </Stack>
                                     <Stack Anchor="R,T" StackGrowth="Left" Offset="0,5">
                                         <GridButton ID="SmartbannerDistrictsAvailableCheckbox" Anchor="L,C" Offset="0,0" Size="300,24" Style="CheckBoxControl" String="LOC_CQUI_CITYVIEW_SMARTBANNER_DISTRICTS_AVAILABLE" />
-                                    </Stack>
-                                </Stack>
+                                    </Stack>                                
+									<Stack Anchor="R,T" StackGrowth="Left" Offset="0,5">
+										<GridButton ID="ShowSuzerainInCityStateBanner" Anchor="L,C" Offset="0,0" Size="300,24" Style="CheckBoxControl" String="LOC_CQUI_SHOW_SUZERAIN_IN_CITYSTATE_BANNER" />
+									</Stack>
+									<Stack ID="CityStateSuzerainOptions" Anchor="R,T" StackGrowth="Down">
+										<Stack Anchor="R,T" StackGrowth="Left" Padding="5">
+											<PullDown ID="CityBannerSuzerainStyle" Style="PullDownBlue" ScrollThreshold="400" Size="300,24" Offset="0,0" SpaceForScroll="0"/>
+										</Stack>
+										<Stack Anchor="R,T" StackGrowth="Left" Padding="5">
+											<GridButton ID="ShowSuzerainLabelInCityStateBanner" Anchor="L,C" Offset="0,0" Size="300,24" Style="CheckBoxControl" String="LOC_CQUI_LABELS_ON_SUZERAIN_ICON" />
+										</Stack>
+									</Stack>
+								</Stack>
                                 <Stack Anchor="C,C" StackGrowth="Left">
                                     <Label Anchor="C,C" Style="ShellOptionText" String="LOC_CQUI_CITYVIEW_WORKICONS_HEADER" Offset="0,10"/>
                                 </Stack>
@@ -440,6 +449,15 @@
                                 <PullDown ID="CityDetailAdvisorPullDown" Style="PullDownBlue" ScrollThreshold="400" Size="300,24" Offset="0,0" SpaceForScroll="0"/>
                                 <Label Anchor="L,C" Style="ShellOptionText" String="LOC_CQUI_RECOMMENDATIONS_SHOWCITYDETAILADVISOR"/>
                             </Stack>
+                        </Stack>
+                    </Container>
+                    <!-- NOTIFICATIONS -->
+                    <Container ID="NotificationsOptions" Size="parent,parent" Hidden="1">
+                        <Stack Anchor="C,T" StackGrowth="Down" Padding="5" Offset="0,50">
+                            <GridButton ID="NotificationGoodyHutCheckbox"   Anchor="L,C" Offset="0,0" Size="300,24" Style="CheckBoxControl" String="LOC_NOTIFICATION_DISCOVER_GOODY_HUT_MESSAGE" />
+                            <!--<GridButton ID="NotificationTradeDealCheckbox"  Anchor="L,C" Offset="0,0" Size="300,24" Style="CheckBoxControl" String="(reserved)Trade Deal" />-->
+                            <!--<GridButton ID="NotificationPopulationCheckbox" Anchor="L,C" Offset="0,0" Size="300,24" Style="CheckBoxControl" String="(reserved)Population" />-->
+                            <!--<GridButton ID="NotificationCityBorderCheckbox" Anchor="L,C" Offset="0,0" Size="300,24" Style="CheckBoxControl" String="(reserved)City Border" />-->
                         </Stack>
                     </Container>
                     <Container ID="HiddenOptions" Size="parent,parent" Hidden="1">
